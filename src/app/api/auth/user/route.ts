@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
-
-
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -18,35 +16,32 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
+    const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return NextResponse.json({ error: "User already exists." }, { status: 409 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const fullName = `${fname} ${lname}`.trim();
     const newUser = await prisma.user.create({
       data: {
         fname,
         lname,
+       name:fullName,
         email,
         password: hashedPassword,
         acceptedTerms,
       },
     });
 
-    return NextResponse.json(
-      { message: "User created successfully", user: newUser },
-      { status: 201 }
-    );
+    return NextResponse.json({ message: "User created", user: newUser }, { status: 201 });
+
   } catch (error: any) {
+    console.error("[SIGNUP_API_ERROR]", error);
     return NextResponse.json(
-      { error: "Internal server error", detail: error.message },
+      { error: error.message || "Unknown server error", stack: error.stack },
       { status: 500 }
     );
+    
   }
 }
