@@ -10,12 +10,8 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-<<<<<<< HEAD
   ListIcon,
   PageIcon,
-=======
- 
->>>>>>> 66291c41461ca6de9d77a4c39b21ce4573d9ff3b
   PlugInIcon,
   
 } from "../icons/index";
