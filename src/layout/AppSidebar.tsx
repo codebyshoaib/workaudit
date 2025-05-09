@@ -6,14 +6,13 @@ import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
   CalenderIcon,
-  ChatIcon,
+  
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  PageIcon,
+ 
   PlugInIcon,
-  TableIcon,
-  TaskIcon,
+  
 } from "../icons/index";
 
 type NavItem = {
