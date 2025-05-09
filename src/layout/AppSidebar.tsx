@@ -10,6 +10,7 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
+  ListIcon,
   PageIcon,
   PlugInIcon,
   TableIcon,
@@ -35,6 +36,15 @@ const navItems: NavItem[] = [
     icon: <CalenderIcon />,
     name: "Calendar",
     path: "/calendar",
+  },
+  {
+    // client screen
+    name: "Forms",
+    icon: <ListIcon />,
+    subItems: [
+      { name: "Form Elements", path: "/form-elements", pro: false },
+      { name: "Form Layout", path: "/form-layout", pro: true },
+    ],
   },
 ];
 
