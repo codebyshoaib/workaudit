@@ -9,6 +9,17 @@ import { type NextAuthOptions } from "next-auth";
 const prisma = new PrismaClient();
 
 import { getServerSession } from "next-auth";
+//seperation of concerns for crud logic
+//jwt cookies 
+//middleware for request proceed as global ...server side..check everything here
+//Zod 
+//clerk
+//layered architecture 
+//client side UI and populate data on server side
+//security attacks as discussed in docx...
+//auth z auth n
+
+
 
 export async function auth() {
   return await getServerSession(authOptions);
@@ -54,7 +65,7 @@ export const authOptions: NextAuthOptions = {
     ],
   
     session: {
-      strategy: "jwt", // Required when using CredentialsProvider
+      strategy: "jwt", 
     },
   
     callbacks: {
