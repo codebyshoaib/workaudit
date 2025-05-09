@@ -1,30 +1,21 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import "swiper/swiper-bundle.css";
-import "simplebar-react/dist/simplebar.min.css";
-import { SidebarProvider } from "@/context/SidebarContext";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { SessionProvider } from "next-auth/react";
+import Providers from "@/components/Providers";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-});
+const outfit = Outfit({ subsets: ["latin"] });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const metadata = {
+  title: "TailAdmin",
+  description: "Admin Dashboard Template",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${outfit.className} dark:bg-gray-900`}>
-        <ThemeProvider>
-          <SidebarProvider>
-            <SessionProvider>
-              {children}
-            </SessionProvider>
-          </SidebarProvider>
-        </ThemeProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
