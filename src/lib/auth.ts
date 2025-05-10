@@ -1,5 +1,6 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@/generated/prisma"; 
+import { PrismaClient } from "@prisma/client";  // ✅ Correct
+ 
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
@@ -21,8 +22,10 @@ import { getServerSession } from "next-auth";
 
 
 
+
+
 export async function auth() {
-  return await getServerSession(authOptions);
+  return await getServerSession(authOptions); // ✅ no headers/cookies
 }
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -43,24 +46,30 @@ export const authOptions: NextAuthOptions = {
           password: { label: "Password", type: "password" },
         },
         async authorize(credentials) {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error("Missing credentials");
+          }
+        
           const user = await prisma.user.findUnique({
-            where: { email: credentials?.email },
+            where: { email: credentials.email },
           });
-  
-          if (!user || !user.password) throw new Error("No user found");
-  
-          const isValid = await bcrypt.compare(
-            credentials.password!,
-            user.password
-          );
-          if (!isValid) throw new Error("Invalid credentials");
-  
+        
+          if (!user || !user.password) {
+            throw new Error("Invalid email or password");
+          }
+        
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) {
+            throw new Error("Invalid email or password");
+          }
+        
           return {
             id: user.id,
             name: user.name ?? `${user.fname ?? ""} ${user.lname ?? ""}`.trim(),
             email: user.email,
           };
-        },
+        }
+        
       }),
     ],
   
@@ -91,6 +100,6 @@ export const authOptions: NextAuthOptions = {
       signIn: "/signin",
     },
   
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.AUTH_SECRET,
   };
   
