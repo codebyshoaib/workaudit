@@ -4,10 +4,18 @@ import { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
 // Protected routes where authentication is required
-const protectedRoutes = ["/","/dashboard", "/admin", "/profile"];
+const protectedRoutes = ["/dashboard", "/admin", "/profile"];
+
+// Exclude callback routes like Google auth callback
+const excludeRoutes = ["/api/auth/callback/google"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Skip session check for routes like /api/auth/callback/google
+  if (excludeRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
 
   // Check for token in cookies
   const token = request.cookies.get("token")?.value;
@@ -34,5 +42,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/","/dashboard/:path*", "/admin/:path*", "/profile/:path*"],
+  matcher: ["/dashboard/:path*", "/admin/:path*", "/profile/:path*"],
 };
