@@ -1,7 +1,4 @@
-// pages/dashboard.tsx (or the appropriate page)
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth"; // Auth function to get the session
-
+// pages/dashboard.tsx
 import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 import MonthlyTarget from "@/components/ecommerce/MonthlyTarget";
 import MonthlySalesChart from "@/components/ecommerce/MonthlySalesChart";
@@ -14,15 +11,7 @@ export const metadata = {
   description: "WorkAudit application",
 };
 
-export default async function Ecommerce() {
-  // Await the session
-  const session = await auth();
-
-  // If no session, redirect to signin page
-  if (!session) {
-    redirect("/signin");
-  }
-
+export default function Ecommerce() {
   return (
     <>
       <div className="grid grid-cols-12 gap-4 md:gap-6">

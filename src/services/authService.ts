@@ -15,18 +15,24 @@ export const registerUser = async (formData: any) => {
 };
 
 // Sign-in function for existing users
-// services/authService.ts
-export const signInUser = async ({ email, password }: { email: string; password: string }) => {
+// Login existing user
+export const signInUser = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   const res = await fetch("/api/auth/signin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
+    credentials: "include",
   });
 
   const data = await res.json();
-  console.log(data);
   if (!res.ok) throw new Error(data.error || "Login failed");
 
-  return data; // Ensure this includes the token and user info
+  return data; // Expect token, user info, etc.
 };
 

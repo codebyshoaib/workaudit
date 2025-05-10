@@ -29,12 +29,9 @@ export function useSignInForm() {
       // Call sign-in API function
       const result = await signInUser(formData);
   
-      if (result?.token) {
-        // Store the JWT token in an HTTP-only cookie (done in backend)
-        // Redirect to the dashboard or home page after successful login
-        router.push("/dashboard");
+      if (result?.message === "Login successful") {
+        router.push("/");
       } else {
-        // Handle API error (invalid credentials or server issue)
         setErrors({ general: result?.error || "Invalid credentials." });
       }
     } catch (err: any) {

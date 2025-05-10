@@ -1,37 +1,38 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";  // Import authOptions from where it's defined
+// middleware.ts
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-const protectedRoutes = ['/dashboard', '/admin', '/profile'];
+// Protected routes where authentication is required
+const protectedRoutes = ["/","/dashboard", "/admin", "/profile"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log(`⏳ Middleware triggered for: ${pathname}`);
 
-  // Use NextAuth to get session info
-  const session = await getServerSession(authOptions);
+  // Check for token in cookies
+  const token = request.cookies.get("token")?.value;
 
-  let isAuthenticated = false;
-  if (session) {
-    isAuthenticated = true; // Session exists, user is authenticated
+  // If there's no token and the user is trying to access a protected route, redirect to signin
+  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
 
-  // Prevent redirect loops for already authenticated users trying to go to /signin or /signup
-  if ((pathname === '/signin' || pathname === '/signup') && isAuthenticated) {
-    return NextResponse.redirect(new URL('/', request.url));  // Redirect logged-in users to homepage
+  // If there's a token, validate it
+  if (token) {
+    try {
+      const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
+      await jwtVerify(token, secret);
+      return NextResponse.next(); // Allow request to continue
+    } catch (err) {
+      // Invalid token, redirect to signin
+      return NextResponse.redirect(new URL("/signin", request.url));
+    }
   }
 
-  // Redirect unauthenticated users trying to access protected routes
-  if (protectedRoutes.some(route => pathname.startsWith(route)) && !isAuthenticated) {
-    return NextResponse.redirect(new URL('/signin', request.url));  // Redirect unauthenticated users to /signin
-  }
-
-  // Allow the request to continue if none of the conditions match
+  // If the route is not protected, just continue
   return NextResponse.next();
 }
 
-// Define the matcher for which routes this middleware applies to
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*', '/profile/:path*', '/signin', '/signup'],
+  matcher: ["/","/dashboard/:path*", "/admin/:path*", "/profile/:path*"],
 };

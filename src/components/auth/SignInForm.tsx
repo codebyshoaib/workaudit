@@ -6,6 +6,8 @@ import Button from "@/components/ui/button/Button";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // You can use this for redirection
+
 export default function SignInForm() {
   const {
     formData,
@@ -17,11 +19,21 @@ export default function SignInForm() {
   } = useSignInForm();
 
   const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const router = useRouter(); // Get the router instance for redirection
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     setIsLoading(true); // Set loading state
-    await handleSubmit(e);
-    setIsLoading(false); // Reset loading state after submission
+    try {
+      const isSuccessful = await handleSubmit(e); // Ensure handleSubmit returns a result
+      if (isSuccessful) {
+        // Redirect to dashboard after successful login
+        router.push("/dashboard"); // Adjust the route as per your app structure
+      }
+    } catch (error) {
+      console.error("Login failed", error);
+      // Handle error by showing a general error message
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,6 +68,7 @@ export default function SignInForm() {
               onChange={handleChange}
               placeholder="info@gmail.com"
               required
+              disabled={isLoading} // Disable input while loading
             />
             {/* Display email error */}
             {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
@@ -71,6 +84,7 @@ export default function SignInForm() {
                 onChange={handleChange}
                 placeholder="Enter your password"
                 required
+                disabled={isLoading} // Disable input while loading
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
