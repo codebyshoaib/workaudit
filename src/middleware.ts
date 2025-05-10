@@ -1,30 +1,37 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";  // Import authOptions from where it's defined
 
 const protectedRoutes = ['/dashboard', '/admin', '/profile'];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log(`⏳ Middleware triggered for: ${pathname}`);
 
-  const token = request.cookies.get('next-auth.session-token')?.value
-             || request.cookies.get('__Secure-next-auth.session-token')?.value;
+  // Use NextAuth to get session info
+  const session = await getServerSession(authOptions);
 
-  // Block access to protected routes
-  if (protectedRoutes.some(route => pathname.startsWith(route)) && !token) {
-    console.log(`🔒 Unauthorized access to ${pathname}. Redirecting to /signin`);
-    return NextResponse.redirect(new URL('/signin', request.url));
+  let isAuthenticated = false;
+  if (session) {
+    isAuthenticated = true; // Session exists, user is authenticated
   }
 
-  // Prevent logged-in users from visiting /signin or /signup
-  if ((pathname === '/signin' || pathname === '/signup') && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  // Prevent redirect loops for already authenticated users trying to go to /signin or /signup
+  if ((pathname === '/signin' || pathname === '/signup') && isAuthenticated) {
+    return NextResponse.redirect(new URL('/', request.url));  // Redirect logged-in users to homepage
   }
 
-  // All good
+  // Redirect unauthenticated users trying to access protected routes
+  if (protectedRoutes.some(route => pathname.startsWith(route)) && !isAuthenticated) {
+    return NextResponse.redirect(new URL('/signin', request.url));  // Redirect unauthenticated users to /signin
+  }
+
+  // Allow the request to continue if none of the conditions match
   return NextResponse.next();
 }
 
+// Define the matcher for which routes this middleware applies to
 export const config = {
   matcher: ['/dashboard/:path*', '/admin/:path*', '/profile/:path*', '/signin', '/signup'],
 };

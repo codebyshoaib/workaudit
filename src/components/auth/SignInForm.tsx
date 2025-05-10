@@ -1,43 +1,27 @@
 "use client";
-
-import Checkbox from "@/components/form/input/Checkbox";
+import { useSignInForm } from "@/hooks/useSignInForm";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
-import React, { useState } from "react";
-import { GithubSignIn } from "./github-signin";
-import { GoogleSignIn } from "./google-signin";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
+import { useState } from "react";
 export default function SignInForm() {
-  const router = useRouter();
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    showPassword,
+    setShowPassword,
+    errors,
+  } = useSignInForm();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const res = await signIn("credentials", {
-      redirect: false, // we'll handle the redirect manually
-      email: formData.email,
-      password: formData.password,
-    });
-
-    if (res?.ok) {
-      router.push("/"); // redirect to dashboard
-    } else {
-      setErrorMsg("Invalid email or password.");
-    }
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    setIsLoading(true); // Set loading state
+    await handleSubmit(e);
+    setIsLoading(false); // Reset loading state after submission
   };
 
   return (
@@ -60,15 +44,9 @@ export default function SignInForm() {
           Enter your email and password to sign in!
         </p>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 my-6">
-          <GoogleSignIn />
-          <GithubSignIn />
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {errorMsg && (
-            <div className="text-red-500 text-sm">{errorMsg}</div>
-          )}
+        <form onSubmit={handleFormSubmit} className="space-y-6">
+          {/* Display error messages */}
+          {errors.general && <div className="text-red-500 text-sm">{errors.general}</div>}
 
           <div>
             <Label>Email <span className="text-error-500">*</span></Label>
@@ -79,6 +57,8 @@ export default function SignInForm() {
               placeholder="info@gmail.com"
               required
             />
+            {/* Display email error */}
+            {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
           </div>
 
           <div>
@@ -103,15 +83,11 @@ export default function SignInForm() {
                 )}
               </span>
             </div>
+            {/* Display password error */}
+            {errors.password && <div className="text-red-500 text-sm">{errors.password}</div>}
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Checkbox checked={isChecked} onChange={setIsChecked} />
-              <span className="block font-normal text-gray-700 text-theme-sm dark:text-gray-400">
-                Keep me logged in
-              </span>
-            </div>
             <Link
               href="/reset-password"
               className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
@@ -120,8 +96,8 @@ export default function SignInForm() {
             </Link>
           </div>
 
-          <Button className="w-full" size="sm" type="submit">
-            Sign in
+          <Button className="w-full" size="sm" type="submit" disabled={isLoading}>
+            {isLoading ? "Signing in..." : "Sign in"} {/* Show loading text */}
           </Button>
         </form>
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
@@ -8,41 +7,20 @@ import Label from "@/components/form/Label";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import { GithubSignIn } from "./github-signin";
 import { GoogleSignIn } from "./google-signin";
+import { useSignUpForm } from "@/hooks/useSignUpForm"; //custom hook
 
+// SignUpForm component
 export default function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isChecked) return alert("You must accept the terms.");
-
-    try {
-      const res = await fetch("/api/auth/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, acceptedTerms: true }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Signup failed");
-
-      alert("Signup successful!");
-    } catch (err: any) {
-      alert("Signup error: " + err.message);
-      console.error(err);
-    }
-  };
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    showPassword,
+    setShowPassword,
+    isChecked,
+    setIsChecked,
+    errors,
+  } = useSignUpForm();
 
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full overflow-y-auto no-scrollbar">
@@ -75,14 +53,22 @@ export default function SignUpForm() {
               <div className="w-full border-t border-gray-200 dark:border-gray-800" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white dark:bg-gray-900 px-4 text-gray-400">Or</span>
+              <span className="bg-white dark:bg-gray-900 px-4 text-gray-400">
+                Or
+              </span>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
+            className="space-y-5"
+          >
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <Label>First Name<span className="text-error-500">*</span></Label>
+                <Label>
+                  First Name<span className="text-error-500">*</span>
+                </Label>
                 <Input
                   type="text"
                   name="fname"
@@ -90,9 +76,14 @@ export default function SignUpForm() {
                   value={formData.fname}
                   onChange={handleChange}
                 />
+                {errors.fname && (
+                  <p className="text-sm text-red-500">{errors.fname}</p>
+                )}
               </div>
               <div>
-                <Label>Last Name<span className="text-error-500">*</span></Label>
+                <Label>
+                  Last Name<span className="text-error-500">*</span>
+                </Label>
                 <Input
                   type="text"
                   name="lname"
@@ -100,11 +91,16 @@ export default function SignUpForm() {
                   value={formData.lname}
                   onChange={handleChange}
                 />
+                {errors.lname && (
+                  <p className="text-sm text-red-500">{errors.lname}</p>
+                )}
               </div>
             </div>
 
             <div>
-              <Label>Email<span className="text-error-500">*</span></Label>
+              <Label>
+                Email<span className="text-error-500">*</span>
+              </Label>
               <Input
                 type="email"
                 name="email"
@@ -112,65 +108,76 @@ export default function SignUpForm() {
                 value={formData.email}
                 onChange={handleChange}
               />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email}</p>
+              )}
             </div>
 
             <div>
-              <Label>Password<span className="text-error-500">*</span></Label>
+              <Label>
+                Password<span className="text-error-500">*</span>
+              </Label>
               <div className="relative">
                 <Input
-                  name="password"
                   type={showPassword ? "text" : "password"}
+                  name="password"
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
                 />
-                <span
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+                {errors.password && (
+                  <p className="text-sm text-red-500">{errors.password}</p>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500"
                 >
-                  {showPassword ? (
-                    <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
-                  ) : (
-                    <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
-                  )}
-                </span>
+                  {showPassword ? <EyeCloseIcon /> : <EyeIcon />}
+                </button>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="pt-2">
               <Checkbox
-                className="w-5 h-5"
+                label={
+                  <span>
+                    I accept the{" "}
+                    <Link href="/terms" className="text-brand-500 underline">
+                      Terms and Conditions
+                    </Link>
+                  </span>
+                }
                 checked={isChecked}
-                onChange={setIsChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
               />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                By creating an account, you agree to the{" "}
-                <span className="text-gray-800 dark:text-white font-medium">
-                  Terms and Conditions
-                </span>{" "}
-                and{" "}
-                <span className="text-gray-800 dark:text-white font-medium">
-                  Privacy Policy
-                </span>
-              </p>
+              {errors.terms && (
+                <p className="text-sm text-red-500">{errors.terms}</p>
+              )}
             </div>
 
-            <div>
-              <button
-                type="submit"
-                className="w-full px-4 py-3 text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 rounded-lg shadow-theme-xs"
+            <button
+              type="submit"
+              disabled={!isChecked}
+              className={`w-full px-4 py-3 text-sm font-medium text-white rounded-lg shadow-theme-xs ${
+                isChecked
+                  ? "bg-brand-500 hover:bg-brand-600"
+                  : "bg-gray-300 cursor-not-allowed"
+              }`}
+            >
+              Sign Up
+            </button>
+
+            <p className="mt-5 text-sm text-center text-gray-700 dark:text-gray-400">
+              Already have an account?{" "}
+              <Link
+                href="/signin"
+                className="text-primary-600 hover:underline dark:text-primary-400"
               >
-                Sign Up
-              </button>
-            </div>
+                Sign In
+              </Link>
+            </p>
           </form>
-
-          <p className="mt-5 text-sm text-center text-gray-700 dark:text-gray-400">
-            Already have an account?{" "}
-            <Link href="/signin" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">
-              Sign In
-            </Link>
-          </p>
         </div>
       </div>
     </div>

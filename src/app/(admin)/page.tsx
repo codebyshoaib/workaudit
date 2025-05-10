@@ -1,25 +1,26 @@
-import type { Metadata } from "next";
-import { redirect } from "next/navigation"; // <-- Add this
-import { auth } from "@/lib/auth"; // <-- You will need an `auth` function here
+// pages/dashboard.tsx (or the appropriate page)
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth"; // Auth function to get the session
 
 import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
-import React from "react";
 import MonthlyTarget from "@/components/ecommerce/MonthlyTarget";
 import MonthlySalesChart from "@/components/ecommerce/MonthlySalesChart";
 import StatisticsChart from "@/components/ecommerce/StatisticsChart";
 import RecentOrders from "@/components/ecommerce/RecentOrders";
 import DemographicCard from "@/components/ecommerce/DemographicCard";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Dashboard",
   description: "WorkAudit application",
 };
 
-export default async function Ecommerce() {   // <-- async added here
-  const session = await auth();                // <-- await user session
+export default async function Ecommerce() {
+  // Await the session
+  const session = await auth();
 
+  // If no session, redirect to signin page
   if (!session) {
-    redirect("/signin");                       // <-- if no session, redirect
+    redirect("/signin");
   }
 
   return (

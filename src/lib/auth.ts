@@ -1,15 +1,16 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";  // ✅ Correct
- 
+import { PrismaClient } from "@prisma/client"; 
+import { NextResponse } from "next/server";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { type NextAuthOptions } from "next-auth";
-
+import { signInUser } from "@/services/authService";
 const prisma = new PrismaClient();
 
 import { getServerSession } from "next-auth";
+
 //seperation of concerns for crud logic
 //jwt cookies 
 //middleware for request proceed as global ...server side..check everything here
@@ -42,33 +43,19 @@ export const authOptions: NextAuthOptions = {
       CredentialsProvider({
         name: "Credentials",
         credentials: {
-          email: { label: "Email", type: "text" },
+          email: { label: "Email", type: "email" },
           password: { label: "Password", type: "password" },
         },
         async authorize(credentials) {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Missing credentials");
+          const user = await signInUser(credentials?.email, credentials.password);
+          if (user) {
+            return user; // Return user object to store in session
+          } else {
+            throw new Error("Invalid credentials");
           }
+        },
         
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email },
-          });
         
-          if (!user || !user.password) {
-            throw new Error("Invalid email or password");
-          }
-        
-          const isValid = await bcrypt.compare(credentials.password, user.password);
-          if (!isValid) {
-            throw new Error("Invalid email or password");
-          }
-        
-          return {
-            id: user.id,
-            name: user.name ?? `${user.fname ?? ""} ${user.lname ?? ""}`.trim(),
-            email: user.email,
-          };
-        }
         
       }),
     ],
@@ -87,10 +74,11 @@ export const authOptions: NextAuthOptions = {
         return token;
       },
       async session({ session, token }) {
-        if (token && session.user) {
-          session.user.id = token.id as string;
-          session.user.name = token.name as string;
-          session.user.email = token.email as string;
+        // Attach user info to the session
+        if (token) {
+          session.user.id = token.id;
+          session.user.email = token.email;
+          session.user.name = token.name;
         }
         return session;
       },
