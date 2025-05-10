@@ -161,7 +161,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\MetaVision\\TailAdmin\\Minim-TailAdmin\\src\\generated\\prisma",
+      "value": "D:\\Work\\Internship\\Workflow Project\\stripped down version\\Version1\\workaudit_main_v1\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -175,7 +175,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\MetaVision\\TailAdmin\\Minim-TailAdmin\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Work\\Internship\\Workflow Project\\stripped down version\\Version1\\workaudit_main_v1\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -189,11 +189,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_m1AKMc8oQSkb@ep-gentle-grass-a4mwn2wp-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+        "value": null
       }
     }
   },

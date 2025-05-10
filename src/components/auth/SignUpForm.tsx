@@ -8,8 +8,10 @@ import Label from "@/components/form/Label";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import { GithubSignIn } from "./github-signin";
 import { GoogleSignIn } from "./google-signin";
+import { signupSchema } from "@/schemas/signupSchema";
 
 export default function SignUpForm() {
+
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [formData, setFormData] = useState({
