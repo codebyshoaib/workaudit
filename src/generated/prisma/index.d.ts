@@ -30,6 +30,24 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const Role: {
+  CLIENT: 'CLIENT',
+  DEVELOPER: 'DEVELOPER',
+  MANAGER: 'MANAGER'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+}
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -1103,43 +1121,43 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     name: string | null
-    fname: string | null
-    lname: string | null
     email: string | null
     password: string | null
     acceptedTerms: boolean | null
-    image: string | null
-    emailVerified: Date | null
     createdAt: Date | null
     updateAt: Date | null
+    image: string | null
+    emailVerified: Date | null
+    fname: string | null
+    lname: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    fname: string | null
-    lname: string | null
     email: string | null
     password: string | null
     acceptedTerms: boolean | null
-    image: string | null
-    emailVerified: Date | null
     createdAt: Date | null
     updateAt: Date | null
+    image: string | null
+    emailVerified: Date | null
+    fname: string | null
+    lname: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     name: number
-    fname: number
-    lname: number
     email: number
     password: number
     acceptedTerms: number
-    image: number
-    emailVerified: number
     createdAt: number
     updateAt: number
+    image: number
+    emailVerified: number
+    fname: number
+    lname: number
     _all: number
   }
 
@@ -1147,43 +1165,43 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     name?: true
-    fname?: true
-    lname?: true
     email?: true
     password?: true
     acceptedTerms?: true
-    image?: true
-    emailVerified?: true
     createdAt?: true
     updateAt?: true
+    image?: true
+    emailVerified?: true
+    fname?: true
+    lname?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     name?: true
-    fname?: true
-    lname?: true
     email?: true
     password?: true
     acceptedTerms?: true
-    image?: true
-    emailVerified?: true
     createdAt?: true
     updateAt?: true
+    image?: true
+    emailVerified?: true
+    fname?: true
+    lname?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     name?: true
-    fname?: true
-    lname?: true
     email?: true
     password?: true
     acceptedTerms?: true
-    image?: true
-    emailVerified?: true
     createdAt?: true
     updateAt?: true
+    image?: true
+    emailVerified?: true
+    fname?: true
+    lname?: true
     _all?: true
   }
 
@@ -1262,15 +1280,15 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     name: string | null
-    fname: string | null
-    lname: string | null
     email: string
     password: string | null
     acceptedTerms: boolean
-    image: string | null
-    emailVerified: Date | null
     createdAt: Date
     updateAt: Date
+    image: string | null
+    emailVerified: Date | null
+    fname: string | null
+    lname: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1293,15 +1311,15 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    fname?: boolean
-    lname?: boolean
     email?: boolean
     password?: boolean
     acceptedTerms?: boolean
-    image?: boolean
-    emailVerified?: boolean
     createdAt?: boolean
     updateAt?: boolean
+    image?: boolean
+    emailVerified?: boolean
+    fname?: boolean
+    lname?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1310,46 +1328,46 @@ export namespace Prisma {
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    fname?: boolean
-    lname?: boolean
     email?: boolean
     password?: boolean
     acceptedTerms?: boolean
-    image?: boolean
-    emailVerified?: boolean
     createdAt?: boolean
     updateAt?: boolean
+    image?: boolean
+    emailVerified?: boolean
+    fname?: boolean
+    lname?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    fname?: boolean
-    lname?: boolean
     email?: boolean
     password?: boolean
     acceptedTerms?: boolean
-    image?: boolean
-    emailVerified?: boolean
     createdAt?: boolean
     updateAt?: boolean
+    image?: boolean
+    emailVerified?: boolean
+    fname?: boolean
+    lname?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     name?: boolean
-    fname?: boolean
-    lname?: boolean
     email?: boolean
     password?: boolean
     acceptedTerms?: boolean
-    image?: boolean
-    emailVerified?: boolean
     createdAt?: boolean
     updateAt?: boolean
+    image?: boolean
+    emailVerified?: boolean
+    fname?: boolean
+    lname?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "fname" | "lname" | "email" | "password" | "acceptedTerms" | "image" | "emailVerified" | "createdAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "acceptedTerms" | "createdAt" | "updateAt" | "image" | "emailVerified" | "fname" | "lname", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -1367,15 +1385,15 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string | null
-      fname: string | null
-      lname: string | null
       email: string
       password: string | null
       acceptedTerms: boolean
-      image: string | null
-      emailVerified: Date | null
       createdAt: Date
       updateAt: Date
+      image: string | null
+      emailVerified: Date | null
+      fname: string | null
+      lname: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1803,15 +1821,15 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
-    readonly fname: FieldRef<"User", 'String'>
-    readonly lname: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly acceptedTerms: FieldRef<"User", 'Boolean'>
-    readonly image: FieldRef<"User", 'String'>
-    readonly emailVerified: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
+    readonly image: FieldRef<"User", 'String'>
+    readonly emailVerified: FieldRef<"User", 'DateTime'>
+    readonly fname: FieldRef<"User", 'String'>
+    readonly lname: FieldRef<"User", 'String'>
   }
     
 
@@ -4511,15 +4529,15 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    fname: 'fname',
-    lname: 'lname',
     email: 'email',
     password: 'password',
     acceptedTerms: 'acceptedTerms',
+    createdAt: 'createdAt',
+    updateAt: 'updateAt',
     image: 'image',
     emailVerified: 'emailVerified',
-    createdAt: 'createdAt',
-    updateAt: 'updateAt'
+    fname: 'fname',
+    lname: 'lname'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4654,15 +4672,15 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
-    fname?: StringNullableFilter<"User"> | string | null
-    lname?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
     acceptedTerms?: BoolFilter<"User"> | boolean
-    image?: StringNullableFilter<"User"> | string | null
-    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
+    image?: StringNullableFilter<"User"> | string | null
+    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
+    fname?: StringNullableFilter<"User"> | string | null
+    lname?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
   }
@@ -4670,15 +4688,15 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
-    fname?: SortOrderInput | SortOrder
-    lname?: SortOrderInput | SortOrder
     email?: SortOrder
     password?: SortOrderInput | SortOrder
     acceptedTerms?: SortOrder
-    image?: SortOrderInput | SortOrder
-    emailVerified?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
+    image?: SortOrderInput | SortOrder
+    emailVerified?: SortOrderInput | SortOrder
+    fname?: SortOrderInput | SortOrder
+    lname?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
   }
@@ -4690,14 +4708,14 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
-    fname?: StringNullableFilter<"User"> | string | null
-    lname?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     acceptedTerms?: BoolFilter<"User"> | boolean
-    image?: StringNullableFilter<"User"> | string | null
-    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
+    image?: StringNullableFilter<"User"> | string | null
+    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
+    fname?: StringNullableFilter<"User"> | string | null
+    lname?: StringNullableFilter<"User"> | string | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
   }, "id" | "email">
@@ -4705,15 +4723,15 @@ export namespace Prisma {
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
-    fname?: SortOrderInput | SortOrder
-    lname?: SortOrderInput | SortOrder
     email?: SortOrder
     password?: SortOrderInput | SortOrder
     acceptedTerms?: SortOrder
-    image?: SortOrderInput | SortOrder
-    emailVerified?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
+    image?: SortOrderInput | SortOrder
+    emailVerified?: SortOrderInput | SortOrder
+    fname?: SortOrderInput | SortOrder
+    lname?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -4725,15 +4743,15 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    fname?: StringNullableWithAggregatesFilter<"User"> | string | null
-    lname?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     acceptedTerms?: BoolWithAggregatesFilter<"User"> | boolean
-    image?: StringNullableWithAggregatesFilter<"User"> | string | null
-    emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    fname?: StringNullableWithAggregatesFilter<"User"> | string | null
+    lname?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type AccountWhereInput = {
@@ -4882,15 +4900,15 @@ export namespace Prisma {
   export type UserCreateInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
@@ -4898,15 +4916,15 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4914,15 +4932,15 @@ export namespace Prisma {
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
@@ -4930,15 +4948,15 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -4946,43 +4964,43 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountCreateInput = {
@@ -5172,17 +5190,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5192,6 +5199,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type AccountListRelationFilter = {
@@ -5222,43 +5240,43 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    fname?: SortOrder
-    lname?: SortOrder
     email?: SortOrder
     password?: SortOrder
     acceptedTerms?: SortOrder
-    image?: SortOrder
-    emailVerified?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
+    image?: SortOrder
+    emailVerified?: SortOrder
+    fname?: SortOrder
+    lname?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    fname?: SortOrder
-    lname?: SortOrder
     email?: SortOrder
     password?: SortOrder
     acceptedTerms?: SortOrder
-    image?: SortOrder
-    emailVerified?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
+    image?: SortOrder
+    emailVerified?: SortOrder
+    fname?: SortOrder
+    lname?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    fname?: SortOrder
-    lname?: SortOrder
     email?: SortOrder
     password?: SortOrder
     acceptedTerms?: SortOrder
-    image?: SortOrder
-    emailVerified?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
+    image?: SortOrder
+    emailVerified?: SortOrder
+    fname?: SortOrder
+    lname?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5305,20 +5323,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5331,6 +5335,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -5484,12 +5502,12 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -5617,17 +5635,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5637,6 +5644,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5703,20 +5721,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5729,6 +5733,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5881,30 +5899,30 @@ export namespace Prisma {
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -5927,60 +5945,60 @@ export namespace Prisma {
   export type UserUpdateWithoutAccountsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
     id?: string
     name?: string | null
-    fname?: string | null
-    lname?: string | null
     email: string
     password?: string | null
     acceptedTerms?: boolean
-    image?: string | null
-    emailVerified?: Date | string | null
     createdAt?: Date | string
     updateAt?: Date | string
+    image?: string | null
+    emailVerified?: Date | string | null
+    fname?: string | null
+    lname?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -6003,30 +6021,30 @@ export namespace Prisma {
   export type UserUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    fname?: NullableStringFieldUpdateOperationsInput | string | null
-    lname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     acceptedTerms?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fname?: NullableStringFieldUpdateOperationsInput | string | null
+    lname?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
 

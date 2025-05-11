@@ -10,6 +10,18 @@ export async function POST(req) {
   const { email, password } = await req.json();
   console.log('Received email and password:', email, password);  // Log received credentials
 
+  async function testUserQuery() {
+    const users = await prisma.user.findMany();
+    console.log("All users:", users);
+  
+    const user = await prisma.user.findUnique({
+      where: { email: "hamza@gmail.com" },
+    });
+    console.log("Queried user:", user);
+  }
+  
+  testUserQuery();
+  
   const user = await prisma.user.findUnique({
     where: { email },
   });

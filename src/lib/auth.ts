@@ -1,5 +1,4 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client"; 
 import { NextResponse } from "next/server";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -7,7 +6,8 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { type NextAuthOptions } from "next-auth";
 import { signInUser } from "@/services/authService";
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prismaClient";
+
 
 import { getServerSession } from "next-auth";
 
@@ -47,12 +47,25 @@ export const authOptions: NextAuthOptions = {
           password: { label: "Password", type: "password" },
         },
         async authorize(credentials) {
-          const user = await signInUser(credentials?.email, credentials.password);
-          if (user) {
-            return user; // Return user object to store in session
-          } else {
+          console.log(credentials?.email, credentials?.password, "in authorize function");
+  
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error("Email and password are required.");
+          }
+  
+          // Authenticate using the custom signInUser function
+          const user = await signInUser({
+            email: credentials.email,
+            password: credentials.password,
+          });
+  
+          if (!user) {
+            console.log("Invalid credentials.");
             throw new Error("Invalid credentials");
           }
+  
+          console.log("User returned from signInUser:", user);
+          return user;  // Return the user object, which will be stored in the session
         },
         
         
